@@ -12,7 +12,7 @@ function* fetchStateList() {
 
 function* fetchDistrictList(action) {
   try {
-    let state = action.payload;
+    const state = action.payload;
     const response = yield axios.get(`/api/data/district/${state}`);
     yield put({ type: 'SET_DISTRICT_LIST', payload: response.data });
   } catch (error) {
@@ -22,7 +22,7 @@ function* fetchDistrictList(action) {
 
 function* fetchSchoolList(action) {
   try {
-    let district = action.payload;
+    const district = action.payload;
     const response = yield axios.get(`/api/data/school/${district}`);
     yield put({ type: 'SET_SCHOOL_LIST', payload: response.data });
   } catch (error) {
@@ -32,32 +32,12 @@ function* fetchSchoolList(action) {
 
 function* fetchDatasetList(action) {
   try {
-    let { currentScope, scopeInfo } = action.payload;
-    let { stateValue, districtValue, schoolValue } = scopeInfo;
-    let response;
-    if (currentScope === 'state') {
-      response = yield axios.get(`/api/data/dataset/${currentScope}/${stateValue}`);
-    } else if (currentScope === 'district') {
-      response = yield axios.get(`/api/data/dataset/${currentScope}/${districtValue}`);
-    } else if (currentScope === 'school') {
-      response = yield axios.get(`/api/data/dataset/${currentScope}/${schoolValue}`);
-    }
+    const { currentScope, scopeInfo } = action.payload;
+    const response = yield axios.get(`/api/data/dataset/${currentScope}/${scopeInfo}`);
+    console.log('response:', response.data);
     yield put({ type: 'SET_DATASET_LIST', payload: response.data });
   } catch (error) {
     console.log('list of datasets GET request failed', error);
-  }
-}
-
-function* fetchSpecificDataset(action) {
-  try {
-    let { currentScope, scopeInfo } = action.payload;
-    let { scopeIdentity, datasetValue, datasetYearValue } = scopeInfo;
-    let response = yield axios.get(`/api/data/scope/${currentScope}/
-      ${scopeIdentity}/${datasetValue}/${datasetYearValue}`);
-
-    yield put({ type: 'SET_SPECIFIC_DATASET', payload: response.data });
-  } catch (error) {
-    console.log('specific dataset GET request failed', error);
   }
 }
 
@@ -66,7 +46,6 @@ function* scopeSelectionSaga() {
   yield takeLatest('GET_DISTRICT_LIST', fetchDistrictList);
   yield takeLatest('GET_SCHOOL_LIST', fetchSchoolList);
   yield takeLatest('GET_DATASET_LIST', fetchDatasetList);
-  yield takeLatest('GET_SPECIFIC_DATASET', fetchSpecificDataset);
 }
 
 export default scopeSelectionSaga;

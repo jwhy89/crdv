@@ -2,3 +2,12 @@
    width: 800px;
    margin: auto;
 }
+
+.Visualizer-graph-placeholder {
+   /* width:400px; */
+   margin: auto;
+}
+
+.Visualizer-section-body {
+   margin: 15px
+}

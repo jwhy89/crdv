@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Form, Segment, Header, Message } from 'semantic-ui-react';
+import {
+  Form, Segment, Header, Message,
+} from 'semantic-ui-react';
 import './LoginPage.css';
 
 class LoginPage extends Component {
@@ -32,29 +34,32 @@ class LoginPage extends Component {
   }
 
   // Takes arguements of properties for Form.Input component
-  renderFormInput = (label, type, name, value ) => {
+  renderFormInput = (label, type, name, value) => {
     // if error message exists, renders input with 'error' property
-    if (!!this.props.errors.loginMessage) {
+    if (this.props.errors.loginMessage) {
       return (
         <Form.Input
           error
-          label={label} type={type}
-          name={name} value={value}
+          label={label}
+          type={type}
+          name={name}
+          value={value}
           placeholder={label}
           onChange={this.handleInputChangeFor()}
         />
-      )
+      );
     // else, renders standard input field
-    } else {
-      return (
-        <Form.Input
-          label={label} type={type}
-          name={name} value={value}
-          placeholder={label}
-          onChange={this.handleInputChangeFor()}
-        />
-      )
     }
+    return (
+      <Form.Input
+        label={label}
+        type={type}
+        name={name}
+        value={value}
+        placeholder={label}
+        onChange={this.handleInputChangeFor()}
+      />
+    );
   }
 
   render() {
@@ -68,18 +73,17 @@ class LoginPage extends Component {
             content={this.props.errors.loginMessage}
           />
         )}
-        <Segment >
-          <Header as="h1">
-            Login
-          </Header>
+        <Segment>
+          <Header as="h1">Login</Header>
           <Form onSubmit={this.login}>
-            {this.renderFormInput("Username", "text", "username", this.state.username)}
-            {this.renderFormInput("Password", "password", "password", this.state.password)}
+            {this.renderFormInput('Username', 'text', 'username', this.state.username)}
+            {this.renderFormInput('Password', 'password', 'password', this.state.password)}
             <Form.Button
               primary
               fluid
               type="submit"
-              name="submit">
+              name="submit"
+            >
               Log in
             </Form.Button>
             <Form.Button
@@ -88,7 +92,8 @@ class LoginPage extends Component {
               secondary
               fluid
               size="small"
-              onClick={() => { this.props.dispatch({ type: 'SET_TO_REGISTER_MODE' }) }}>
+              onClick={() => { this.props.dispatch({ type: 'SET_TO_REGISTER_MODE' }); }}
+            >
               Register
             </Form.Button>
           </Form>
